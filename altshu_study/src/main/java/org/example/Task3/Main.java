@@ -16,10 +16,10 @@ public class Main {
 
     private static int[] readingFromConsole() {
 
-        List<String> manual = Arrays.asList("Введите три числа:",
-                "1-е - это число, которое является началом последовательности.",
-                "2-е - это число, которое является концом последовательности.",
-                "3-е - это число для сверки кратности.");
+        List<String> manual = Arrays.asList("Enter three numbers:",
+                "1st is the number that is the beginning of the sequence.",
+                "2nd is the number that is the end of the sequence.",
+                "The 3rd is the number for checking the multiplicity.");
 
         int[] numbers = new int[3];
 
@@ -35,17 +35,9 @@ public class Main {
     }
 
     private static void searchForMultiples(int[] numbers) {
-        System.out.printf("Числа кратные \"%s\":\n", numbers[2]);
+        System.out.printf("Multiples \"%s\":\n", numbers[2]);
         IntStream.range(numbers[0], numbers[1])
                 .filter(i -> i % numbers[2] == 0)
                 .forEach(System.out::println);
-
-//        int[] list = IntStream.range(numbers[0], numbers[1])
-//                .filter(i -> i % numbers[2] == 0)
-//                .toArray();
-//        System.out.printf("Числа кратные %s:\n", numbers[2]);
-//        for (int i : list) {
-//            System.out.print(i + " ");
-//        }
     }
 }

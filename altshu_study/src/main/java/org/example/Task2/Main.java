@@ -17,7 +17,7 @@ public class Main {
 
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            System.out.println("Введите количество чисел, которые будете считывать");
+            System.out.println("Enter the number of numbers to read");
             for (int i = 0; i < 3; i++) {
                 numbers[i] = (Double.parseDouble(br.readLine()));
             }
@@ -27,9 +27,9 @@ public class Main {
     }
 
     private static void isExists(double[] numbers) {
-
+        // мне кажется, что достаточно двух проверок, но оставил все три
         System.out.println((numbers[0] < numbers[1] + numbers[2]
                 && numbers[1] < numbers[0] + numbers[2]
-                && numbers[2] < numbers[0] + numbers[1]) ? "Треугольник существует" : "Треугольник НЕсуществует");
+                && numbers[2] < numbers[0] + numbers[1]) ? "Triangle exists" : "Triangle does NOT exist");
     }
 }

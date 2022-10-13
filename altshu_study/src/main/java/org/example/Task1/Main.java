@@ -19,16 +19,18 @@ public class Main {
         int numberOfDigits;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            System.out.println("Введите количество чисел, которые будете считывать");
+            System.out.println("Enter the number of numbers to read");
             numberOfDigits = Integer.parseInt(br.readLine());
             List<Integer> numbers = new ArrayList<>();
             for (int i = 0; i < numberOfDigits; i++) {
                 numbers.add(Integer.parseInt((br.readLine())));
             }
-            System.out.println("Введёные числа:");
-            numbers.forEach(System.out::println);
-//            return Arrays.stream(numbers).sorted().toArray();
+            Collections.sort(numbers);
+            System.out.println("Entered numbers:");
+            numbers.forEach(System.out::print);
+            System.out.println();
             return numbers;
+
         } catch (IOException e) {
             throw new RuntimeException("Something went wrong...");
         }
@@ -36,18 +38,27 @@ public class Main {
 
     private static void printMatchesToConsole(List<Integer> numbers) {
 
-//        Map<String, String> map = new HashMap<>();
-//        for (String number : numbers) {
-//            if (map.containsKey(number)) {
-//                map.put(number, map.get(number) + " " + number);
-//            } else {
-//                map.put(number, number);
-//            }
-//        }
         Map<Integer, Long> map = numbers.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
         Map<Integer, Long> mapSortedByValue = map.entrySet().stream()
                 .sorted(Map.Entry.<Integer, Long>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-        // TODO вывести в консоль
+        mapSortedByValue.entrySet().stream()
+                .map(e -> " " + e.getKey() + " " + e.getValue())
+                .forEach(System.out::println);
+
+        System.out.println("Output result:");
+        for (Map.Entry<Integer, Long> entry : mapSortedByValue.entrySet()) {
+            if (entry.getValue() > 1) {
+                for (int i = 0; i < entry.getValue(); i++) {
+                    System.out.print(entry.getKey() + " ");
+                }
+                System.out.println();
+            }
+        }
+
+        System.out.print("Unique numbers: ");
+        mapSortedByValue.entrySet().stream()
+                .filter(x-> x.getValue()<2)
+                .forEach(x -> System.out.print(x.getKey() + " "));
     }
 }
