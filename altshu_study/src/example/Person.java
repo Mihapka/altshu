@@ -1,14 +1,16 @@
 package example;
 
+import java.util.Arrays;
+
 public class Person {
 
     private String phoneNumber;
     private String firstname;
     private String surname;
     private String address;
-    private String emails;
+    private String[] emails;
 
-    public Person(String phoneNumber, String firstname, String surname, String address, String emails) {
+    public Person(String phoneNumber, String firstname, String surname, String[] emails, String address) {
         this.phoneNumber = phoneNumber;
         this.firstname = firstname;
         this.surname = surname;
@@ -48,11 +50,20 @@ public class Person {
         this.address = address;
     }
 
-    public String getEmails() {
+    public String [] getEmails() {
         return emails;
     }
 
-    public void setEmails(String emails) {
-        this.emails = emails;
+    public void setEmails(int pos, String email) {
+        this.emails[pos] = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Фамилия и имя: " + firstname + " " +  surname + "\n" +
+                "номер телефона: " + phoneNumber + "\n" +
+                "Е-маил: " + String.join(", ", emails) + "\n" +
+                "Адрес: " + address + "\n"
+                ;
     }
 }

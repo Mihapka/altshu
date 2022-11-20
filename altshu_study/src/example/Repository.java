@@ -9,9 +9,39 @@ public class Repository {
 
     Map<String, Person> repo = new HashMap<>();
 
+    public Repository(Map<String, Person> repo) {
+        this.repo = repo;
+    }
+
+    public Repository() {
+
+    }
+
+    public boolean keyVerification(String key) {
+        return repo.containsKey(key);
+    }
+
+    public void showAllUsers() {
+        for (var entry : repo.entrySet()) {
+            System.out.println(entry.toString());
+        }
+    }
+
     public Person searchByPhoneNumber(String phoneNumber) {
 
         return repo.getOrDefault(phoneNumber, null);
+    }
+
+    public Person searchByEmail(String searchData) {
+
+        for (Person key : repo.values()) {
+            for (String str : key.getEmails()) {
+                if (searchData.equalsIgnoreCase(str)){
+                    return key;
+                }
+            }
+        }
+        return null;
     }
 
     public List<Person> searchByFirstOrLastName(String name) {
@@ -28,11 +58,12 @@ public class Repository {
 
     public void addEntry(Person person) {
 
-         repo.put(person.getPhoneNumber(),person);
+        repo.put(person.getPhoneNumber(), person);
     }
 
     public void deleteEntryByPhoneNumber(String phoneNumber) {
 
         repo.remove(phoneNumber);
     }
+
 }
