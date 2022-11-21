@@ -1,14 +1,12 @@
 package example;
 
-import java.util.Arrays;
-
 public class Person {
 
     private String phoneNumber;
     private String firstname;
     private String surname;
     private String address;
-    private String[] emails;
+    private final String[] emails; /* идея подсказала, что можно сделать поле finale, почему? не понятно*/
 
     public Person(String phoneNumber, String firstname, String surname, String[] emails, String address) {
         this.phoneNumber = phoneNumber;

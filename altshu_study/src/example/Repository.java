@@ -9,10 +9,6 @@ public class Repository {
 
     Map<String, Person> repo = new HashMap<>();
 
-    public Repository(Map<String, Person> repo) {
-        this.repo = repo;
-    }
-
     public Repository() {
 
     }
@@ -36,7 +32,7 @@ public class Repository {
 
         for (Person key : repo.values()) {
             for (String str : key.getEmails()) {
-                if (searchData.equalsIgnoreCase(str)){
+                if (searchData.equalsIgnoreCase(str)) {
                     return key;
                 }
             }

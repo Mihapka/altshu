@@ -37,12 +37,15 @@ public class Service {
         while (true) {
             try (BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in))) {
                 menuItem = Integer.parseInt(buffer.readLine());
-                if (menuItem == 1) menuItemOne();
-                if (menuItem == 2) menuItemTwo();
-                if (menuItem == 3) menuItemThree();
-                if (menuItem == 4) menuItemFour();
-                if (menuItem == 5) menuItemFive();
-                if (menuItem == 6) menuItemSix();
+                switch (menuItem) {
+                    case 1 -> menuItemOne();
+                    case 2 -> menuItemTwo();
+                    case 3 -> menuItemThree();
+                    case 4 -> menuItemFour();
+                    case 5 -> menuItemFive();
+                    case 6 -> menuItemSix();
+                }
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -142,23 +145,27 @@ public class Service {
     }
 
     public void menuItemFour() {
+
         System.out.println("пользователя с каким номером телефона удалить?");
+
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in))) {
             searchData = buffer.readLine();
             if (repository.keyVerification(searchData)) {
                 System.out.println("Пользователь:" + "\n"
                         + repository.searchByPhoneNumber(searchData) + "\n"
-                        + "удален");
+                        + "удален!" + "\n");
                 repository.deleteEntryByPhoneNumber(searchData);
-                System.out.println("""
+            }else {
+                System.out.println("Пользователя с таким номером телефона нет.");
+            }
+
+            System.out.println("""
                         1- продолжить удаление
                         2- выйти в главное меню""");
-                if ((menuItem = Integer.parseInt(buffer.readLine())) == 1){
-                    menuItemFour();
-                }else {
-                    work();
-
-                }
+            if ((menuItem = Integer.parseInt(buffer.readLine())) == 1) {
+                menuItemFour();
+            } else {
+                work();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -180,6 +187,8 @@ public class Service {
     }
 
     public void menuItemSix() {
+        System.out.println("До свидания! Хорошего дня!");
+        System.exit(0);
     }
 
     public void editingUser(String searchData) {
@@ -195,7 +204,7 @@ public class Service {
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in))) {
             menuItem = Integer.parseInt(buffer.readLine());
             switch (menuItem) {
-                case 1: {
+                case 1 -> {
                     if (repository.keyVerification(searchData)) {
                         System.out.println("""
                                 Такой пользователь существует.
@@ -207,18 +216,16 @@ public class Service {
                     } else {
                         work();
                     }
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     System.out.println("Введите имя и фамилию, через Ентер");
                     String firstName = buffer.readLine();
                     String surname = buffer.readLine();
                     repository.searchByPhoneNumber(searchData).setFirstname(firstName);
                     repository.searchByPhoneNumber(searchData).setSurname(surname);
                     System.out.println(repository.searchByPhoneNumber(searchData));
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     System.out.println("Список электронных адресов:");
                     String[] emails = repository.searchByPhoneNumber(searchData).getEmails();
                     System.out.println("Выбирете электронный адрес для редактирования:");
@@ -240,18 +247,14 @@ public class Service {
                         work();
                     }
                     System.out.println(repository.searchByPhoneNumber(searchData));
-                    break;
                 }
-                case 4: {
+                case 4 -> {
                     System.out.println("Введите новый адрес.");
                     String address = buffer.readLine();
                     repository.searchByPhoneNumber(searchData).setAddress(address);
                     System.out.println(repository.searchByPhoneNumber(searchData));
-                    break;
                 }
-                case 5: {
-                    work();
-                }
+                case 5 -> work();
             }
 
             System.out.println("1- продолжить редактировать текущую запись" + "\n"
@@ -276,8 +279,7 @@ public class Service {
             for (int i = 0; i < strings.length; i++) {
                 strings[i] = buffer.readLine();
             }
-            Person p = new Person(searchData, strings[0], strings[1], new String[]{strings[2]}, strings[3]);
-            repository.addEntry(p);
+            repository.addEntry(new Person(searchData, strings[0], strings[1], new String[]{strings[2]}, strings[3]));
             System.out.println("Новый пользователь сохранен:" + "\n"
                     + repository.searchByPhoneNumber(searchData));
             work();
