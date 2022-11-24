@@ -18,10 +18,11 @@ public class Task_1 {
 
     private static void dayOfWeekSearch() {
 
-        DateTimeFormatter dateTimeFormatter01 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//        dateTimeFormatter01 = dateTimeFormatter01.withResolverStyle(ResolverStyle.LENIENT);
-        System.out.println("Введите дату в формате \"dd.MM.yyyy\"");
         LocalDate localDate;
+        DateTimeFormatter dateTimeFormatter01 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        System.out.println("Введите дату в формате \"dd.MM.yyyy\", например: 20.02.2002");
+
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in))) {
 
             String data = buffer.readLine();
@@ -42,10 +43,14 @@ public class Task_1 {
 
     private static boolean dataValidation(String data) {
 
-        int[] array = Arrays.stream(data.split("\\."))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        if (data.matches("\\d")) {
 
-        return array[0] > 0 && array[0] < 32 && array[1] > 0 & array[1] < 13 && array[2] > 0 && array[2] < 10000;
+            int[] array = Arrays.stream(data.split("\\."))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+
+            return array[0] > 0 && array[0] < 32 && array[1] > 0 & array[1] < 13 && array[2] > 0 && array[2] < 10000;
+        }
+        return false;
     }
 }
